@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outils Psychométriques Numériques</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 font-sans min-h-screen flex flex-col">
+
+    <!-- En-tête -->
+    <header class="bg-white border-b border-slate-200 shadow-sm">
+        <div class="max-w-5xl mx-auto px-6 py-8">
+            <div class="flex items-center gap-3 mb-2">
+                <div class="bg-blue-600 p-2 rounded-lg text-white">
+                    <i data-lucide="activity-square" width="24" height="24"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-slate-800">Outils Cliniques Numériques</h1>
+            </div>
+            <p class="text-slate-500 max-w-2xl">
+                Plateforme de passation et de cotation automatique pour la pratique psychiatrique et psychologique quotidienne. 
+                Données sécurisées en local (Client-Side Only).
+            </p>
+        </div>
+    </header>
+
+    <!-- Contenu Principal -->
+    <main class="flex-grow max-w-5xl mx-auto px-6 py-12 w-full">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Carte DIVA 2.0 -->
+            <a href="diva2.html" class="group block bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-200 overflow-hidden">
+                <div class="h-2 bg-blue-500"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-3 bg-blue-50 text-blue-600 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <i data-lucide="brain-circuit" width="24" height="24"></i>
+                        </div>
+                        <span class="text-xs font-bold px-2 py-1 bg-slate-100 text-slate-500 rounded uppercase tracking-wider">TDAH</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">DIVA 2.0</h2>
+                    <p class="text-sm text-slate-500 mb-6">
+                        Entretien diagnostique pour le TDAH chez l'adulte. Cotation automatique enfance/âge adulte.
+                    </p>
+                    <div class="flex items-center text-blue-600 font-medium text-sm">
+                        Ouvrir le formulaire <i data-lucide="arrow-right" width="16" class="ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Carte MADRS -->
+            <a href="madrs.html" class="group block bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all duration-200 overflow-hidden">
+                <div class="h-2 bg-indigo-500"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-3 bg-indigo-50 text-indigo-600 rounded-lg group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                            <i data-lucide="bar-chart-2" width="24" height="24"></i>
+                        </div>
+                        <span class="text-xs font-bold px-2 py-1 bg-slate-100 text-slate-500 rounded uppercase tracking-wider">Dépression</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-indigo-600 transition-colors">MADRS</h2>
+                    <p class="text-sm text-slate-500 mb-6">
+                        Échelle de dépression de Montgomery et Åsberg. Calcul du score et interprétation de la sévérité.
+                    </p>
+                    <div class="flex items-center text-indigo-600 font-medium text-sm">
+                        Ouvrir le formulaire <i data-lucide="arrow-right" width="16" class="ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Carte Future (Placeholder) -->
+            <div class="bg-slate-50 rounded-xl border border-dashed border-slate-300 p-6 flex flex-col items-center justify-center text-center opacity-75">
+                <div class="p-3 bg-slate-100 text-slate-400 rounded-lg mb-4">
+                    <i data-lucide="plus" width="24" height="24"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-400">Nouvel outil ?</h3>
+                <p class="text-xs text-slate-400 mt-2">D'autres questionnaires pourront être ajoutés ici.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="bg-white border-t border-slate-200 mt-auto">
+        <div class="max-w-5xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-sm text-slate-500">
+                &copy; <span id="year"></span> Cabinet Médical. Usage professionnel uniquement.
+            </div>
+            <div class="flex gap-4">
+                <a href="#" class="text-slate-400 hover:text-slate-600 transition-colors">
+                    <i data-lucide="github" width="20"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialisation des icônes
+        lucide.createIcons();
+        
+        // Année courante
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
