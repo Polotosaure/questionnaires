@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASRS v1.1 - TDAH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; -webkit-print-color-adjust: exact; }
+            .shadow-xl { box-shadow: none !important; }
+            input, textarea { border: none !important; resize: none; }
+            .bg-slate-100 { background-color: #f1f5f9 !important; } /* Garder le gris pour les zones ombrées */
+        }
+        .cell-radio { cursor: pointer; }
+        .cell-radio:hover { background-color: #f8fafc; }
+        .cell-radio.selected { position: relative; }
+        .cell-radio.selected::after {
+            content: '✕';
+            font-size: 24px; font-weight: bold; color: #2563eb;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans min-h-screen text-slate-800">
+
+    <!-- En-tête -->
+    <div class="no-print sticky top-0 z-50 bg-white border-b shadow-sm p-4 mb-6">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <a href="index.html" class="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                    <i data-lucide="arrow-left" class="text-slate-600"></i>
+                </a>
+                <div class="bg-blue-600 p-2 rounded-lg text-white">
+                    <i data-lucide="zap" width="20" height="20"></i>
+                </div>
+                <h1 class="text-xl font-bold text-slate-800">ASRS-v1.1</h1>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="resetForm()" class="flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg">
+                    <i data-lucide="rotate-ccw" width="16"></i> Reset
+                </button>
+                <button onclick="window.print()" class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg">
+                    <i data-lucide="printer" width="16"></i> PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto p-6 bg-white shadow-xl mb-12 print:shadow-none print:p-0">
+        
+        <div class="border-b-4 border-slate-800 pb-6 mb-6">
+            <h1 class="text-3xl font-bold text-slate-900 mb-2">ASRS-v1.1</h1>
+            <p class="text-slate-500 uppercase text-xs font-bold tracking-wider">Adult ADHD Self-Report Scale</p>
+            
+            <div class="mt-6 grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded border border-slate-200 print:bg-white print:border-0">
+                <input type="text" placeholder="Nom du Patient" class="bg-transparent border-b border-slate-300 p-2 w-full outline-none font-bold text-lg">
+                <input type="date" class="bg-transparent border-b border-slate-300 p-2 w-full outline-none">
+            </div>
+        </div>
+
+        <p class="text-sm text-slate-600 mb-6 italic">
+            Répondez aux questions ci-dessous en vous basant sur votre ressenti des <strong>6 derniers mois</strong>.
+        </p>
+
+        <!-- Tableau -->
+        <div class="border border-slate-300 rounded-lg overflow-hidden text-sm">
+            <!-- Header -->
+            <div class="grid grid-cols-12 bg-slate-100 font-bold text-slate-700 border-b border-slate-300 text-center">
+                <div class="col-span-6 p-3 text-left">Questions</div>
+                <div class="col-span-1 p-3 border-l border-slate-300 text-xs">Jamais</div>
+                <div class="col-span-1 p-3 border-l border-slate-300 text-xs">Rarement</div>
+                <div class="col-span-1 p-3 border-l border-slate-300 text-xs">Parfois</div>
+                <div class="col-span-1 p-3 border-l border-slate-300 text-xs">Souvent</div>
+                <div class="col-span-2 p-3 border-l border-slate-300 text-xs">Très souvent</div>
+            </div>
+
+            <!-- Partie A -->
+            <div class="bg-slate-200 p-2 font-bold text-slate-800 text-xs uppercase tracking-wider border-b border-slate-300">
+                Partie A : Dépistage
+            </div>
+            <div id="part-a-container"></div>
+
+            <!-- Partie B -->
+            <div class="bg-slate-200 p-2 font-bold text-slate-800 text-xs uppercase tracking-wider border-y border-slate-300">
+                Partie B : Symptômes additionnels
+            </div>
+            <div id="part-b-container"></div>
+        </div>
+
+        <!-- Score & Interprétation -->
+        <div class="mt-8 p-6 bg-slate-50 rounded-xl border border-slate-200 break-inside-avoid">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-slate-900 text-lg">Résultat du Dépistage (Partie A)</h3>
+                <div class="text-2xl font-bold bg-white px-4 py-2 rounded shadow-sm border border-slate-200">
+                    <span id="score-a" class="text-blue-600">0</span> / 6
+                </div>
+            </div>
+            <p class="text-sm text-slate-600">
+                Si le score de la Partie A est de <strong>4 ou plus</strong>, il y a une forte probabilité de TDAH chez l'adulte.
+            </p>
+            
+            <div class="mt-6 border-t border-slate-200 pt-4">
+                <label class="block text-sm font-bold text-slate-700 mb-2">Commentaires</label>
+                <textarea class="w-full p-3 border border-slate-300 rounded h-24 bg-white" placeholder="Notes..."></textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Configuration:
+        // threshold: indice (0-4) à partir duquel la réponse est considérée "significative" (zone ombrée)
+        // 0=Jamais, 1=Rarement, 2=Parfois, 3=Souvent, 4=Très souvent
+        const questionsA = [
+            { id: 1, text: "Avez-vous des difficultés à conclure les derniers détails d'un projet, une fois que les parties les plus difficiles ont été effectuées ?", threshold: 2 }, // Parfois+
+            { id: 2, text: "Avez-vous des difficultés à mettre de l'ordre dans les choses lorsque vous devez effectuer une tâche qui demande de l'organisation ?", threshold: 2 },
+            { id: 3, text: "Avez-vous des problèmes à vous souvenir de vos rendez-vous ou de vos obligations ?", threshold: 2 },
+            { id: 4, text: "Lorsque vous devez effectuer une tâche qui demande beaucoup de réflexion, évitez-vous ou retardez-vous le moment de la commencer ?", threshold: 3 }, // Souvent+
+            { id: 5, text: "Remuez-vous souvent vos mains ou vos pieds lorsque vous devez rester assis(e) pendant un long moment ?", threshold: 3 },
+            { id: 6, text: "Vous sentez-vous souvent trop actif(ve) ou obligé(e) de faire des choses, comme si vous aviez un moteur ?", threshold: 3 }
+        ];
+
+        const questionsB = [
+            { id: 7, text: "Faites-vous des fautes d'inattention lorsque vous devez travailler sur un projet ennuyeux ou difficile ?", threshold: 3 },
+            { id: 8, text: "Avez-vous des difficultés à garder votre attention lorsque vous effectuez un travail ennuyeux ou répétitif ?", threshold: 3 },
+            { id: 9, text: "Avez-vous des difficultés à vous concentrer sur ce que les gens vous disent, même lorsqu'ils s'adressent directement à vous ?", threshold: 2 },
+            { id: 10, text: "Egarer ou avoir des difficultés à retrouver des objets à la maison ou au travail ?", threshold: 3 },
+            { id: 11, text: "Êtes-vous distrait(e) par l'activité ou le bruit autour de vous ?", threshold: 3 },
+            { id: 12, text: "Vous levez-vous de votre siège en réunion ou dans d'autres situations où vous devriez rester assis(e) ?", threshold: 2 },
+            { id: 13, text: "Vous sentez-vous agité(e) ou anxieux(se) ?", threshold: 3 },
+            { id: 14, text: "Avez-vous des difficultés à vous détendre et à vous reposer lorsque vous avez du temps pour vous ?", threshold: 3 },
+            { id: 15, text: "Vous arrive-t-il de trop parler dans des situations sociales ?", threshold: 3 },
+            { id: 16, text: "Lorsque vous êtes dans une conversation, vous arrive-t-il de finir les phrases de vos interlocuteurs avant eux ?", threshold: 2 },
+            { id: 17, text: "Avez-vous des difficultés à attendre votre tour dans les situations où il faut patienter ?", threshold: 3 },
+            { id: 18, text: "Vous arrive-t-il d'interrompre les autres lorsqu'ils sont occupés ?", threshold: 2 }
+        ];
+
+        let answers = {};
+
+        function renderRow(q, container) {
+            const div = document.createElement('div');
+            div.className = "grid grid-cols-12 border-b border-slate-200 last:border-0";
+            
+            // Question Text
+            div.innerHTML = `<div class="col-span-6 p-3 text-slate-800 font-medium flex gap-2"><span class="text-slate-400 font-bold">${q.id}.</span> ${q.text}</div>`;
+            
+            // Options 0 to 4
+            for(let i=0; i<=4; i++) {
+                // Determine if this cell should be shaded (gray background)
+                const isShaded = i >= q.threshold;
+                const bgClass = isShaded ? "bg-slate-100" : "bg-white";
+                
+                const cell = document.createElement('div');
+                cell.className = `col-span-1 last:col-span-2 p-3 border-l border-slate-200 text-center cell-radio ${bgClass}`;
+                cell.id = `q${q.id}-opt${i}`;
+                cell.onclick = () => select(q.id, i, q.threshold, i >= q.threshold);
+                
+                div.appendChild(cell);
+            }
+            container.appendChild(div);
+        }
+
+        function select(qId, val, threshold, isSignificant) {
+            answers[qId] = { val, isSignificant };
+            
+            // Update UI
+            for(let i=0; i<=4; i++) {
+                document.getElementById(`q${qId}-opt${i}`).classList.remove('selected');
+            }
+            document.getElementById(`q${qId}-opt${val}`).classList.add('selected');
+            
+            calculate();
+        }
+
+        function calculate() {
+            let scoreA = 0;
+            questionsA.forEach(q => {
+                if (answers[q.id]?.isSignificant) scoreA++;
+            });
+            document.getElementById('score-a').innerText = scoreA;
+        }
+
+        window.onload = function() {
+            lucide.createIcons();
+            const ca = document.getElementById('part-a-container');
+            const cb = document.getElementById('part-b-container');
+            
+            questionsA.forEach(q => renderRow(q, ca));
+            questionsB.forEach(q => renderRow(q, cb));
+        };
+
+        function resetForm() {
+            if(confirm('Effacer ?')) {
+                answers = {};
+                document.querySelectorAll('.cell-radio').forEach(c => c.classList.remove('selected'));
+                document.querySelectorAll('input, textarea').forEach(i => i.value = '');
+                calculate();
+            }
+        }
+    </script>
+</body>
+</html>
