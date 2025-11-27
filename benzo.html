@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benzodiazépines - Demi-vies & Règles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; }
+            .shadow-sm, .shadow-md { box-shadow: none !important; }
+            .border { border-color: #000 !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans min-h-screen text-slate-800">
+
+    <!-- En-tête -->
+    <div class="no-print sticky top-0 z-50 bg-white border-b shadow-sm p-4 mb-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <a href="index.html" class="p-2 hover:bg-slate-100 rounded-full transition-colors" title="Retour à l'accueil">
+                    <i data-lucide="arrow-left" class="text-slate-600"></i>
+                </a>
+                <div class="bg-violet-600 p-2 rounded-lg text-white">
+                    <i data-lucide="hourglass" width="20" height="20"></i>
+                </div>
+                <h1 class="text-xl font-bold text-slate-800">Benzodiazépines</h1>
+            </div>
+            
+            <div class="relative w-full md:w-64">
+                <i data-lucide="search" class="absolute left-3 top-2.5 text-slate-400 w-4 h-4"></i>
+                <input type="text" id="searchInput" placeholder="Rechercher (ex: Xanax, Valium...)" 
+                       class="w-full pl-10 pr-4 py-2 bg-slate-100 border-transparent focus:bg-white focus:ring-2 focus:ring-violet-500 rounded-lg text-sm transition-all outline-none">
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenu Principal -->
+    <div class="max-w-6xl mx-auto p-4 md:p-6 mb-12">
+        
+        <!-- Rappel Législatif -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 no-print">
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 flex gap-3">
+                <i data-lucide="info" class="text-blue-600 flex-shrink-0 mt-1"></i>
+                <div>
+                    <h3 class="font-bold text-blue-800 text-sm">Anxiolytiques</h3>
+                    <p class="text-xs text-blue-700 mt-1">Durée max de prescription : <strong>12 semaines</strong>. Délivrance fractionnée possible.</p>
+                </div>
+            </div>
+            <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4 flex gap-3">
+                <i data-lucide="moon" class="text-indigo-600 flex-shrink-0 mt-1"></i>
+                <div>
+                    <h3 class="font-bold text-indigo-800 text-sm">Hypnotiques</h3>
+                    <p class="text-xs text-indigo-700 mt-1">Durée max de prescription : <strong>4 semaines</strong> (2 sem. pour Halcion, 28j pour Zolpidem).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-600 text-sm uppercase tracking-wider border-b border-slate-200">
+                            <th class="p-4 font-bold w-1/4">Molécule <br><span class="text-xs text-slate-400 font-normal normal-case">(Nom Commercial)</span></th>
+                            <th class="p-4 font-bold w-1/6">Demi-vie (T½)</th>
+                            <th class="p-4 font-bold w-1/6">Type</th>
+                            <th class="p-4 font-bold w-1/3">Remarques & Pharmacocinétique</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="text-sm divide-y divide-slate-100">
+                        <!-- Généré par JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-6 p-4 bg-yellow-50 border border-yellow-100 rounded-lg text-xs text-yellow-800 flex gap-2">
+            <i data-lucide="alert-triangle" class="w-4 h-4 flex-shrink-0"></i>
+            <p>
+                <strong>Attention au cumul :</strong> Les demi-vies longues favorisent l'accumulation (risque de chute/confusion, surtout chez le sujet âgé).<br>
+                <strong>Attention au sevrage :</strong> Les demi-vies courtes exposent à un effet rebond et une dépendance plus rapide à l'arrêt.
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // Données BZD
+        // T1/2 = Demi-vie d'élimination
+        const data = [
+            // Demi-vie COURTE (< 10h)
+            {
+                molecule: "Zolpidem",
+                brands: "Stilnox",
+                halfLife: 2.5,
+                type: "hypnotique",
+                notes: "Apparenté BZD. Action rapide. Ordonnance sécurisée obligatoire. Durée max 28j. Risque d'automatismes."
+            },
+            {
+                molecule: "Zopiclone",
+                brands: "Imovane",
+                halfLife: 5,
+                type: "hypnotique",
+                notes: "Apparenté BZD. Goût métallique fréquent. Durée max 4 semaines."
+            },
+            {
+                molecule: "Midazolam",
+                brands: "Hypnovel",
+                halfLife: 2,
+                type: "hypnotique",
+                notes: "Usage hospitalier / Soins palliatifs. Sédation rapide et très courte."
+            },
+            {
+                molecule: "Oxazepam",
+                brands: "Seresta",
+                halfLife: 8,
+                type: "anxiolytique",
+                notes: "<strong>Pas de métabolites actifs.</strong> Molécule de choix chez le sujet âgé ou insuffisant hépatique. Délai d'action lent."
+            },
+            
+            // Demi-vie INTERMÉDIAIRE (10 - 24h)
+            {
+                molecule: "Alprazolam",
+                brands: "Xanax",
+                halfLife: 12,
+                type: "anxiolytique",
+                notes: "Action rapide, risque addictif élevé (effet 'flash'). Risque de rebond anxieux inter-dose."
+            },
+            {
+                molecule: "Lorazepam",
+                brands: "Temesta",
+                halfLife: 15,
+                type: "anxiolytique",
+                notes: "<strong>Pas de métabolites actifs.</strong> Alternative au Seresta si besoin d'une forme plus puissante/rapide."
+            },
+            {
+                molecule: "Bromazepam",
+                brands: "Lexomil",
+                halfLife: 20,
+                type: "anxiolytique",
+                notes: "Demi-vie environ 20h. Très prescrit, attention à l'accumulation légère."
+            },
+            {
+                molecule: "Clotiazepam",
+                brands: "Veratran",
+                halfLife: 15,
+                type: "anxiolytique",
+                notes: "Action rapide. Profil proche du Xanax mais demi-vie légèrement plus longue."
+            },
+            {
+                molecule: "Lormétazépam",
+                brands: "Noctamide",
+                halfLife: 10,
+                type: "hypnotique",
+                notes: "Hypnotique 'vrai' (BZD). Risque d'amnésie antérograde."
+            },
+
+            // Demi-vie LONGUE (> 24h)
+            {
+                molecule: "Diazepam",
+                brands: "Valium",
+                halfLife: 40,
+                type: "anxiolytique",
+                notes: "Métabolites actifs jusqu'à <strong>100h+</strong>. Reference pour le sevrage alcoolique. Fort pouvoir myorelaxant."
+            },
+            {
+                molecule: "Prazepam",
+                brands: "Lysanxia",
+                halfLife: 60,
+                type: "anxiolytique",
+                notes: "Prodrogue (pic plasmatique retardé). Moins d'effet 'flash'. Très longue élimination (métabolites > 100h)."
+            },
+            {
+                molecule: "Clonazepam",
+                brands: "Rivotril",
+                halfLife: 35,
+                type: "antiepileptique",
+                notes: "<strong>Prescription Sécurisée + Initiale Neuro/Pédiatre.</strong> Hors AMM fréquent en anxiété/douleur (déconseillé par HAS)."
+            },
+            {
+                molecule: "Clobazam",
+                brands: "Urbanyl",
+                halfLife: 20,
+                type: "anxiolytique",
+                notes: "Propriétés anti-convulsivantes marquées. Demi-vie longue avec métabolites (40h+)."
+            },
+            {
+                molecule: "Clorazépate",
+                brands: "Tranxène",
+                halfLife: 50,
+                type: "anxiolytique",
+                notes: "Prodrogue. Risque d'accumulation important. Prescription sécurisée (20mg)."
+            }
+        ];
+
+        const tableBody = document.getElementById('tableBody');
+        const searchInput = document.getElementById('searchInput');
+
+        function getHalfLifeBadge(hours) {
+            if (hours < 10) return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Courte (~${hours}h)</span>`;
+            if (hours < 24) return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">Interm. (~${hours}h)</span>`;
+            return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Longue (>24h)</span>`;
+        }
+
+        function getTypeBadge(type) {
+            if (type === 'hypnotique') return `<span class="inline-block px-2 py-1 rounded text-xs border bg-indigo-50 text-indigo-700 border-indigo-200">Hypnotique</span>`;
+            if (type === 'antiepileptique') return `<span class="inline-block px-2 py-1 rounded text-xs border bg-purple-50 text-purple-700 border-purple-200">Anti-épileptique</span>`;
+            return `<span class="inline-block px-2 py-1 rounded text-xs border bg-blue-50 text-blue-700 border-blue-200">Anxiolytique</span>`;
+        }
+
+        function renderTable(filter = "") {
+            tableBody.innerHTML = "";
+            const lowerFilter = filter.toLowerCase();
+
+            // Trier par demi-vie croissante par défaut
+            const sortedData = [...data].sort((a, b) => a.halfLife - b.halfLife);
+
+            sortedData.forEach(item => {
+                const textToSearch = `${item.molecule} ${item.brands} ${item.notes}`.toLowerCase();
+                
+                if (textToSearch.includes(lowerFilter)) {
+                    const row = document.createElement('tr');
+                    row.className = "hover:bg-slate-50 transition-colors group";
+                    
+                    row.innerHTML = `
+                        <td class="p-4 align-top">
+                            <div class="font-bold text-slate-800 text-lg">${item.molecule}</div>
+                            <div class="text-violet-600 font-medium text-sm">${item.brands}</div>
+                        </td>
+                        <td class="p-4 align-top">
+                            ${getHalfLifeBadge(item.halfLife)}
+                        </td>
+                        <td class="p-4 align-top">
+                            ${getTypeBadge(item.type)}
+                        </td>
+                        <td class="p-4 align-top text-slate-600 text-sm leading-relaxed">
+                            ${item.notes}
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                }
+            });
+            
+            if (tableBody.children.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-slate-400">Aucune molécule trouvée pour "${filter}"</td></tr>`;
+            }
+        }
+
+        // Init
+        renderTable();
+        lucide.createIcons();
+
+        // Search Event
+        searchInput.addEventListener('input', (e) => {
+            renderTable(e.target.value);
+        });
+
+    </script>
+</body>
+</html>
