@@ -46,10 +46,11 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-100 text-slate-600 text-sm uppercase tracking-wider border-b border-slate-200">
-                            <th class="p-4 font-bold w-1/6">Classe</th>
-                            <th class="p-4 font-bold w-1/4">Molécule <br><span class="text-xs text-slate-400 font-normal normal-case">(Nom Commercial)</span></th>
-                            <th class="p-4 font-bold w-1/4">Profil Clinique</th>
-                            <th class="p-4 font-bold w-1/3">Principaux Effets Secondaires & Remarques</th>
+                            <th class="p-4 font-bold">Classe</th>
+                            <th class="p-4 font-bold">Molécule <br><span class="text-xs text-slate-400 font-normal normal-case">(Nom Commercial)</span></th>
+                            <th class="p-4 font-bold">Profil Clinique</th>
+                            <th class="p-4 font-bold">Cytochromes P450</th>
+                            <th class="p-4 font-bold">Principaux Effets Secondaires & Remarques</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody" class="text-sm divide-y divide-slate-100">
@@ -77,6 +78,7 @@
                 molecule: "Fluoxétine",
                 brands: "Prozac",
                 profile: ["stimulant"],
+                cyp: { substrat: ["2D6", "2C9"], inhibiteur: ["2D6"], inducteur: [] },
                 sideEffects: "Agitation, troubles digestifs, insomnie. Longue demi-vie (pas de syndrome de sevrage brutal)."
             },
             {
@@ -84,6 +86,7 @@
                 molecule: "Paroxétine",
                 brands: "Deroxat, Divarius",
                 profile: ["sedatif", "anxiolytique"],
+                cyp: { substrat: ["2D6"], inhibiteur: ["2D6"], inducteur: [] },
                 sideEffects: "Prise de poids, troubles sexuels fréquents, effets anticholinergiques légers. Syndrome de sevrage marqué (demi-vie courte)."
             },
             {
@@ -91,6 +94,7 @@
                 molecule: "Sertraline",
                 brands: "Zoloft",
                 profile: ["intermediaire", "stimulant"],
+                cyp: { substrat: ["2C19", "2D6", "3A4"], inhibiteur: ["2D6"], inducteur: [] },
                 sideEffects: "Troubles digestifs (diarrhées) fréquents au début. Profil assez polyvalent."
             },
             {
@@ -98,6 +102,7 @@
                 molecule: "Escitalopram",
                 brands: "Seroplex",
                 profile: ["anxiolytique", "intermediaire"],
+                cyp: { substrat: ["2C19", "3A4"], inhibiteur: ["2D6"], inducteur: [] },
                 sideEffects: "Très sélectif. Surveillance QT nécessaire (dose-dépendant). Bonne tolérance globale."
             },
             {
@@ -105,6 +110,7 @@
                 molecule: "Citalopram",
                 brands: "Seropram",
                 profile: ["anxiolytique", "sedatif"],
+                cyp: { substrat: ["2C19", "3A4", "2D6"], inhibiteur: ["2D6"], inducteur: [] },
                 sideEffects: "Risque allongement QT (attention sujets âgés). Sédation légère possible."
             },
 
@@ -114,6 +120,7 @@
                 molecule: "Venlafaxine",
                 brands: "Effexor",
                 profile: ["stimulant", "anxiolytique"],
+                cyp: { substrat: ["2D6", "3A4"], inhibiteur: [], inducteur: [] },
                 sideEffects: "Hypertension artérielle (dose-dépendante), sudation, nausées. Syndrome de sevrage très marqué."
             },
             {
@@ -121,6 +128,7 @@
                 molecule: "Duloxétine",
                 brands: "Cymbalta",
                 profile: ["stimulant", "antalgique"],
+                cyp: { substrat: ["1A2", "2D6"], inhibiteur: ["2D6"], inducteur: [] },
                 sideEffects: "Nausées, vertiges. Utile si douleurs neuropathiques associées."
             },
             {
@@ -128,6 +136,7 @@
                 molecule: "Milnacipran",
                 brands: "Ixel",
                 profile: ["stimulant"],
+                cyp: { substrat: [], inhibiteur: [], inducteur: [], note: "Glucuronidation (CYP minimal)" },
                 sideEffects: "Dysurie (attention hommes > 50 ans), hypertension, sudation."
             },
 
@@ -137,6 +146,7 @@
                 molecule: "Clomipramine",
                 brands: "Anafranil",
                 profile: ["anxiolytique", "sedatif"],
+                cyp: { substrat: ["2D6", "1A2", "2C19", "3A4"], inhibiteur: ["2D6"], inducteur: [] },
                 sideEffects: "Anticholinergiques ++ (bouche sèche, constipation, retention U). Prise de poids, hypotension ortho. Référence TOC."
             },
             {
@@ -144,6 +154,7 @@
                 molecule: "Amitriptyline",
                 brands: "Laroxyl",
                 profile: ["tres-sedatif", "antalgique"],
+                cyp: { substrat: ["2D6", "2C19", "1A2", "3A4"], inhibiteur: [], inducteur: [] },
                 sideEffects: "Sédation majeure, prise de poids, effets anticholinergiques marqués. Cardiotoxicité en surdosage."
             },
 
@@ -153,6 +164,7 @@
                 molecule: "Mirtazapine",
                 brands: "Norset",
                 profile: ["tres-sedatif", "anxiolytique"],
+                cyp: { substrat: ["1A2", "2D6", "3A4"], inhibiteur: [], inducteur: [] },
                 sideEffects: "Prise de poids (augmentation appétit), sédation diurne. Peu de troubles sexuels."
             },
             {
@@ -160,6 +172,7 @@
                 molecule: "Miansérine",
                 brands: "Athymil",
                 profile: ["sedatif"],
+                cyp: { substrat: ["2D6", "1A2", "3A4"], inhibiteur: [], inducteur: [] },
                 sideEffects: "Sédation, prise de poids. Risque agranulocytose (surveillance NFS recommandée)."
             },
             {
@@ -167,6 +180,7 @@
                 molecule: "Vortioxétine",
                 brands: "Brintellix",
                 profile: ["stimulant", "procognitif"],
+                cyp: { substrat: ["2D6", "3A4", "2C19", "2C9"], inhibiteur: [], inducteur: [] },
                 sideEffects: "Nausées fréquentes (transitoires). Peu d'effets sexuels ou pondéraux."
             },
             {
@@ -174,6 +188,7 @@
                 molecule: "Agomélatine",
                 brands: "Valdoxan",
                 profile: ["sedatif"],
+                cyp: { substrat: ["1A2", "2C9"], inhibiteur: [], inducteur: [] },
                 sideEffects: "Hépatotoxicité (surveillance transaminases obligatoire). Aide à resynchroniser le sommeil."
             }
         ];
@@ -209,6 +224,23 @@
                         return `<span class="inline-block px-2 py-1 rounded text-xs border ${b.class} mr-1 mb-1">${b.label}</span>`;
                     }).join('');
 
+                    // Cytochrome HTML generation
+                    let cypHtml = '';
+                    if (item.cyp) {
+                        if (item.cyp.substrat && item.cyp.substrat.length > 0) {
+                            cypHtml += `<div class="mb-1"><span class="text-xs text-slate-500">Substrat:</span> <span class="font-medium text-slate-700">${item.cyp.substrat.map(c => 'CYP' + c).join(', ')}</span></div>`;
+                        }
+                        if (item.cyp.inhibiteur && item.cyp.inhibiteur.length > 0) {
+                            cypHtml += `<div class="mb-1"><span class="text-xs text-red-500">Inhibiteur:</span> <span class="font-medium text-red-600">${item.cyp.inhibiteur.map(c => 'CYP' + c).join(', ')}</span></div>`;
+                        }
+                        if (item.cyp.inducteur && item.cyp.inducteur.length > 0) {
+                            cypHtml += `<div class="mb-1"><span class="text-xs text-amber-500">Inducteur:</span> <span class="font-medium text-amber-600">${item.cyp.inducteur.map(c => 'CYP' + c).join(', ')}</span></div>`;
+                        }
+                        if (item.cyp.note) {
+                            cypHtml += `<div class="text-xs text-slate-400 italic">${item.cyp.note}</div>`;
+                        }
+                    }
+
                     row.innerHTML = `
                         <td class="p-4 align-top font-medium text-slate-500 text-xs uppercase">${item.class}</td>
                         <td class="p-4 align-top">
@@ -217,6 +249,9 @@
                         </td>
                         <td class="p-4 align-top">
                             <div class="flex flex-wrap">${badgesHtml}</div>
+                        </td>
+                        <td class="p-4 align-top text-sm">
+                            ${cypHtml}
                         </td>
                         <td class="p-4 align-top text-slate-600 text-sm leading-relaxed">
                             ${item.sideEffects}
@@ -227,7 +262,7 @@
             });
             
             if (tableBody.children.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-slate-400">Aucun résultat trouvé pour "${filter}"</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400">Aucun résultat trouvé pour "${filter}"</td></tr>`;
             }
         }
 
