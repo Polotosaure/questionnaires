@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiches Patients - Informations Médicaments</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; }
+            .shadow-sm, .shadow-md, .shadow-lg { box-shadow: none !important; }
+            .page-break { page-break-before: always; }
+            .fiche-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1px solid #000 !important;
+                margin-bottom: 1rem;
+            }
+            @page { margin: 1cm; }
+        }
+        @media screen {
+            .fiche-card {
+                transition: all 0.2s;
+            }
+            .fiche-card:hover {
+                transform: translateY(-2px);
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans min-h-screen text-slate-800">
+
+    <!-- En-tête -->
+    <div class="no-print sticky top-0 z-50 bg-white border-b shadow-sm p-4 mb-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <a href="index.html" class="p-2 hover:bg-slate-100 rounded-full transition-colors" title="Retour à l'accueil">
+                    <i data-lucide="arrow-left" class="text-slate-600"></i>
+                </a>
+                <div class="bg-emerald-600 p-2 rounded-lg text-white">
+                    <i data-lucide="file-text" width="20" height="20"></i>
+                </div>
+                <h1 class="text-xl font-bold text-slate-800">Fiches Patients - Informations Médicaments</h1>
+            </div>
+
+            <div class="flex gap-2">
+                <button onclick="window.print()" class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors text-sm font-medium">
+                    <i data-lucide="printer" width="16" height="16"></i>
+                    Imprimer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="no-print max-w-6xl mx-auto px-4 mb-6">
+        <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 flex gap-3">
+            <i data-lucide="info" class="text-emerald-600 flex-shrink-0 mt-0.5"></i>
+            <p class="text-sm text-emerald-800">
+                <strong>Instructions :</strong> Sélectionnez les fiches à imprimer en cliquant dessus, puis utilisez le bouton "Imprimer" ou Ctrl+P.
+                Chaque fiche est conçue pour tenir sur une demi-page A4.
+            </p>
+        </div>
+    </div>
+
+    <!-- Contenu Principal -->
+    <div class="max-w-6xl mx-auto p-4 md:p-6 mb-12">
+
+        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 no-print">Thymorégulateurs</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+            <!-- Fiche Lamictal -->
+            <div class="fiche-card bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-amber-500 text-white p-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold">LAMOTRIGINE</h3>
+                            <p class="text-amber-100 font-medium">Lamictal</p>
+                        </div>
+                        <span class="bg-amber-600 px-3 py-1 rounded-full text-xs font-bold uppercase">Thymorégulateur</span>
+                    </div>
+                </div>
+                <div class="p-5 space-y-4">
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="target" class="w-4 h-4 text-amber-500"></i> Pourquoi ce médicament ?
+                        </h4>
+                        <p class="text-sm text-slate-600">Prévention des épisodes dépressifs dans le trouble bipolaire. Stabilisateur de l'humeur.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-amber-500"></i> Comment le prendre ?
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li>1 à 2 prises par jour, pendant ou en dehors des repas</li>
+                            <li><strong>Augmentation très progressive</strong> obligatoire sur plusieurs semaines</li>
+                            <li>Ne jamais arrêter brutalement</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+                        <h4 class="font-bold text-red-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="alert-triangle" class="w-4 h-4"></i> Signes d'alerte - Consultez en URGENCE
+                        </h4>
+                        <ul class="text-sm text-red-700 space-y-1 list-disc list-inside">
+                            <li><strong>Éruption cutanée</strong> (rougeurs, boutons, cloques)</li>
+                            <li>Fièvre, symptômes grippaux, ganglions</li>
+                            <li>Aphtes, ulcérations buccales</li>
+                        </ul>
+                        <p class="text-xs text-red-600 mt-2 italic">Risque rare mais grave de réaction allergique cutanée (syndrome de Stevens-Johnson)</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="thermometer" class="w-4 h-4 text-amber-500"></i> Effets indésirables possibles
+                        </h4>
+                        <p class="text-sm text-slate-600">Maux de tête, vertiges, vision floue, nausées, troubles du sommeil. Généralement bien toléré.</p>
+                    </div>
+
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                        <h4 class="font-bold text-blue-700 text-sm flex items-center gap-2 mb-1">
+                            <i data-lucide="baby" class="w-4 h-4"></i> Grossesse
+                        </h4>
+                        <p class="text-xs text-blue-700">Contraception efficace recommandée. En cas de projet de grossesse, consultez votre médecin pour adapter le traitement.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fiche Lithium -->
+            <div class="fiche-card bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-amber-500 text-white p-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold">LITHIUM</h3>
+                            <p class="text-amber-100 font-medium">Téralithe, Téralithe LP</p>
+                        </div>
+                        <span class="bg-amber-600 px-3 py-1 rounded-full text-xs font-bold uppercase">Thymorégulateur</span>
+                    </div>
+                </div>
+                <div class="p-5 space-y-4">
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="target" class="w-4 h-4 text-amber-500"></i> Pourquoi ce médicament ?
+                        </h4>
+                        <p class="text-sm text-slate-600">Traitement de référence du trouble bipolaire. Prévention des rechutes maniaques et dépressives.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-amber-500"></i> Comment le prendre ?
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Prendre <strong>à heures régulières</strong>, le soir de préférence</li>
+                            <li><strong>Boire suffisamment</strong> (1,5 à 2L d'eau/jour)</li>
+                            <li>Éviter les régimes sans sel</li>
+                            <li>Ne jamais arrêter brutalement</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+                        <h4 class="font-bold text-red-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="alert-triangle" class="w-4 h-4"></i> Signes de surdosage - Consultez en URGENCE
+                        </h4>
+                        <ul class="text-sm text-red-700 space-y-1 list-disc list-inside">
+                            <li>Tremblements importants, troubles de l'équilibre</li>
+                            <li>Diarrhées, vomissements, confusion</li>
+                            <li>Soif intense, urines abondantes</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-3">
+                        <h4 class="font-bold text-orange-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="flask-conical" class="w-4 h-4"></i> Surveillance obligatoire
+                        </h4>
+                        <ul class="text-xs text-orange-700 space-y-1 list-disc list-inside">
+                            <li><strong>Lithémie</strong> (prise de sang) : régulière selon prescription</li>
+                            <li>Fonction rénale et thyroïdienne : tous les 6-12 mois</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="ban" class="w-4 h-4 text-amber-500"></i> À éviter
+                        </h4>
+                        <p class="text-sm text-slate-600">Anti-inflammatoires (ibuprofène, etc.), diurétiques. <strong>Attention à la déshydratation</strong> (fièvre, canicule, sport intense).</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 no-print">Antipsychotiques</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+            <!-- Fiche Aripiprazole -->
+            <div class="fiche-card bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-purple-500 text-white p-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold">ARIPIPRAZOLE</h3>
+                            <p class="text-purple-100 font-medium">Abilify</p>
+                        </div>
+                        <span class="bg-purple-600 px-3 py-1 rounded-full text-xs font-bold uppercase">Antipsychotique</span>
+                    </div>
+                </div>
+                <div class="p-5 space-y-4">
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="target" class="w-4 h-4 text-purple-500"></i> Pourquoi ce médicament ?
+                        </h4>
+                        <p class="text-sm text-slate-600">Stabilisation de l'humeur, traitement des épisodes maniaques, aide dans la dépression résistante. Antipsychotique atypique.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-purple-500"></i> Comment le prendre ?
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li>1 prise par jour, matin ou soir</li>
+                            <li>Pendant ou en dehors des repas</li>
+                            <li>Effet stabilisé après quelques semaines</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="thermometer" class="w-4 h-4 text-purple-500"></i> Effets indésirables possibles
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Agitation, insomnie (surtout au début)</li>
+                            <li>Akathisie (impatiences, besoin de bouger)</li>
+                            <li>Nausées, maux de tête</li>
+                        </ul>
+                        <p class="text-xs text-slate-500 mt-2">Profil métabolique favorable (peu de prise de poids)</p>
+                    </div>
+
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                        <h4 class="font-bold text-yellow-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="alert-circle" class="w-4 h-4"></i> Points de vigilance
+                        </h4>
+                        <ul class="text-xs text-yellow-700 space-y-1 list-disc list-inside">
+                            <li>Risque de comportements impulsifs (jeu, achats, hypersexualité) - signalez tout changement</li>
+                            <li>Ne pas conduire en début de traitement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fiche Quétiapine -->
+            <div class="fiche-card bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-purple-500 text-white p-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold">QUÉTIAPINE</h3>
+                            <p class="text-purple-100 font-medium">Xeroquel, Xeroquel LP</p>
+                        </div>
+                        <span class="bg-purple-600 px-3 py-1 rounded-full text-xs font-bold uppercase">Antipsychotique</span>
+                    </div>
+                </div>
+                <div class="p-5 space-y-4">
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="target" class="w-4 h-4 text-purple-500"></i> Pourquoi ce médicament ?
+                        </h4>
+                        <p class="text-sm text-slate-600">Stabilisation de l'humeur, traitement des épisodes maniaques et dépressifs bipolaires, troubles anxieux sévères.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-purple-500"></i> Comment le prendre ?
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li>1 à 2 prises par jour selon la forme (LP = 1 prise le soir)</li>
+                            <li><strong>Le soir de préférence</strong> (sédatif)</li>
+                            <li>Augmentation progressive des doses</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="thermometer" class="w-4 h-4 text-purple-500"></i> Effets indésirables possibles
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li><strong>Somnolence</strong> (fréquente, surtout au début)</li>
+                            <li>Prise de poids, augmentation de l'appétit</li>
+                            <li>Bouche sèche, constipation</li>
+                            <li>Vertiges au lever (hypotension orthostatique)</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-3">
+                        <h4 class="font-bold text-orange-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="flask-conical" class="w-4 h-4"></i> Surveillance recommandée
+                        </h4>
+                        <ul class="text-xs text-orange-700 space-y-1 list-disc list-inside">
+                            <li>Glycémie et bilan lipidique (risque métabolique)</li>
+                            <li>Poids régulier</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 no-print">Antidépresseurs</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+            <!-- Fiche Sertraline -->
+            <div class="fiche-card bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-teal-500 text-white p-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold">SERTRALINE</h3>
+                            <p class="text-teal-100 font-medium">Zoloft</p>
+                        </div>
+                        <span class="bg-teal-600 px-3 py-1 rounded-full text-xs font-bold uppercase">Antidépresseur ISRS</span>
+                    </div>
+                </div>
+                <div class="p-5 space-y-4">
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="target" class="w-4 h-4 text-teal-500"></i> Pourquoi ce médicament ?
+                        </h4>
+                        <p class="text-sm text-slate-600">Traitement de la dépression, troubles anxieux, TOC, stress post-traumatique, trouble panique.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-teal-500"></i> Comment le prendre ?
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li>1 prise par jour, matin ou soir</li>
+                            <li>Pendant ou en dehors des repas</li>
+                            <li><strong>Délai d'action : 2 à 4 semaines</strong></li>
+                            <li>Traitement prolongé (au moins 6 mois)</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="thermometer" class="w-4 h-4 text-teal-500"></i> Effets indésirables possibles
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Nausées, diarrhées (fréquentes au début, transitoires)</li>
+                            <li>Insomnie ou somnolence</li>
+                            <li>Troubles sexuels (baisse de libido)</li>
+                            <li>Céphalées</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                        <h4 class="font-bold text-yellow-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="alert-circle" class="w-4 h-4"></i> Points importants
+                        </h4>
+                        <ul class="text-xs text-yellow-700 space-y-1 list-disc list-inside">
+                            <li>Ne pas arrêter brutalement (réduction progressive)</li>
+                            <li>Signalez toute aggravation des pensées négatives en début de traitement</li>
+                            <li>Éviter l'alcool</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fiche Fluoxétine -->
+            <div class="fiche-card bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-teal-500 text-white p-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold">FLUOXÉTINE</h3>
+                            <p class="text-teal-100 font-medium">Prozac</p>
+                        </div>
+                        <span class="bg-teal-600 px-3 py-1 rounded-full text-xs font-bold uppercase">Antidépresseur ISRS</span>
+                    </div>
+                </div>
+                <div class="p-5 space-y-4">
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="target" class="w-4 h-4 text-teal-500"></i> Pourquoi ce médicament ?
+                        </h4>
+                        <p class="text-sm text-slate-600">Traitement de la dépression, boulimie, TOC. Effet plutôt stimulant/activateur.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-teal-500"></i> Comment le prendre ?
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li>1 prise par jour, <strong>le matin</strong> (effet stimulant)</li>
+                            <li>Pendant ou en dehors des repas</li>
+                            <li><strong>Délai d'action : 2 à 4 semaines</strong></li>
+                            <li>Longue demi-vie : effet prolongé après arrêt</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="thermometer" class="w-4 h-4 text-teal-500"></i> Effets indésirables possibles
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Agitation, nervosité, insomnie</li>
+                            <li>Nausées, perte d'appétit</li>
+                            <li>Céphalées</li>
+                            <li>Troubles sexuels</li>
+                        </ul>
+                        <p class="text-xs text-slate-500 mt-2">Pas de syndrome de sevrage brutal grâce à la longue demi-vie</p>
+                    </div>
+
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                        <h4 class="font-bold text-yellow-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="alert-circle" class="w-4 h-4"></i> Points importants
+                        </h4>
+                        <ul class="text-xs text-yellow-700 space-y-1 list-disc list-inside">
+                            <li>Signalez toute aggravation de l'anxiété ou des pensées négatives</li>
+                            <li>Éviter l'alcool</li>
+                            <li>Interactions médicamenteuses nombreuses (signalez vos autres traitements)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 no-print">Anxiolytiques & Hypnotiques</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+            <!-- Fiche Benzodiazépines -->
+            <div class="fiche-card bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-violet-500 text-white p-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold">BENZODIAZÉPINES</h3>
+                            <p class="text-violet-100 font-medium">Xanax, Lexomil, Temesta, Seresta, Valium...</p>
+                        </div>
+                        <span class="bg-violet-600 px-3 py-1 rounded-full text-xs font-bold uppercase">Anxiolytique</span>
+                    </div>
+                </div>
+                <div class="p-5 space-y-4">
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="target" class="w-4 h-4 text-violet-500"></i> Pourquoi ce médicament ?
+                        </h4>
+                        <p class="text-sm text-slate-600">Traitement de courte durée de l'anxiété sévère, des crises d'angoisse. Aide ponctuelle, pas un traitement de fond.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-violet-500"></i> Comment le prendre ?
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li>À la dose minimale efficace</li>
+                            <li><strong>Durée limitée : 12 semaines maximum</strong></li>
+                            <li>Ne jamais arrêter brutalement</li>
+                            <li>Réduction progressive obligatoire</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+                        <h4 class="font-bold text-red-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="alert-triangle" class="w-4 h-4"></i> Risques importants
+                        </h4>
+                        <ul class="text-sm text-red-700 space-y-1 list-disc list-inside">
+                            <li><strong>Dépendance</strong> : risque après quelques semaines</li>
+                            <li><strong>Somnolence</strong> : ne pas conduire en début de traitement</li>
+                            <li><strong>Chutes</strong> : risque accru chez le sujet âgé</li>
+                            <li>Troubles de la mémoire</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="ban" class="w-4 h-4 text-violet-500"></i> À éviter absolument
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li><strong>Alcool</strong> (majoration de la sédation, risque vital)</li>
+                            <li>Autres dépresseurs du système nerveux</li>
+                            <li>Pamplemousse (certaines molécules)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fiche Somnifères -->
+            <div class="fiche-card bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-indigo-500 text-white p-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold">SOMNIFÈRES</h3>
+                            <p class="text-indigo-100 font-medium">Stilnox, Imovane, Noctamide...</p>
+                        </div>
+                        <span class="bg-indigo-600 px-3 py-1 rounded-full text-xs font-bold uppercase">Hypnotique</span>
+                    </div>
+                </div>
+                <div class="p-5 space-y-4">
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="target" class="w-4 h-4 text-indigo-500"></i> Pourquoi ce médicament ?
+                        </h4>
+                        <p class="text-sm text-slate-600">Traitement de courte durée de l'insomnie sévère. Ne traite pas la cause de l'insomnie.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-indigo-500"></i> Comment le prendre ?
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li>1 prise <strong>juste avant le coucher</strong></li>
+                            <li>S'assurer d'avoir 7-8h de sommeil devant soi</li>
+                            <li><strong>Durée limitée : 4 semaines maximum</strong></li>
+                            <li>Usage ponctuel, pas quotidien si possible</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+                        <h4 class="font-bold text-red-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="alert-triangle" class="w-4 h-4"></i> Risques importants
+                        </h4>
+                        <ul class="text-sm text-red-700 space-y-1 list-disc list-inside">
+                            <li><strong>Dépendance rapide</strong> (même après quelques jours)</li>
+                            <li>Somnambulisme, comportements automatiques (rare mais possible)</li>
+                            <li>Amnésie de la soirée/nuit</li>
+                            <li>Somnolence résiduelle le lendemain</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                        <h4 class="font-bold text-yellow-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="lightbulb" class="w-4 h-4"></i> Conseils pour mieux dormir
+                        </h4>
+                        <ul class="text-xs text-yellow-700 space-y-1 list-disc list-inside">
+                            <li>Horaires de coucher/lever réguliers</li>
+                            <li>Pas d'écrans 1h avant le coucher</li>
+                            <li>Chambre fraîche, sombre et silencieuse</li>
+                            <li>Limiter caféine après 14h</li>
+                            <li>Exercice physique (mais pas le soir)</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2 mb-2">
+                            <i data-lucide="ban" class="w-4 h-4 text-indigo-500"></i> À éviter
+                        </h4>
+                        <p class="text-sm text-slate-600"><strong>Alcool</strong> (dangereux), conduite le lendemain matin si somnolence.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Avertissement -->
+        <div class="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800 flex gap-3">
+            <i data-lucide="alert-circle" class="w-5 h-5 flex-shrink-0 mt-0.5"></i>
+            <div>
+                <p class="font-bold mb-1">Avertissement</p>
+                <p class="text-xs">
+                    Ces fiches sont des informations générales destinées aux patients. Elles ne remplacent pas les conseils de votre médecin ni la notice du médicament.
+                    En cas de doute ou d'effet indésirable, contactez votre médecin ou pharmacien.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
