@@ -62,12 +62,20 @@
                 </div>
             </div>
 
-            <div class="flex gap-3">
-                <button onclick="resetForm()" class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors">
-                    <i data-lucide="rotate-ccw" width="16"></i> Réinitialiser
+            <div class="flex items-center gap-3">
+                <!-- Indicateur de sauvegarde -->
+                <div id="save-indicator" class="flex items-center gap-1 text-green-600 text-sm opacity-0 transition-opacity duration-300">
+                    <i data-lucide="check-circle" width="16"></i> Sauvegardé
+                </div>
+
+                <button onclick="resetForm()" class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-orange-600 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors" title="Effacer ce mois">
+                    <i data-lucide="rotate-ccw" width="16"></i> <span class="hidden md:inline">Ce mois</span>
                 </button>
-                <button onclick="window.print()" class="flex items-center gap-2 px-6 py-2 text-sm font-bold text-white bg-amber-500 hover:bg-amber-600 rounded-lg shadow-sm transition-colors">
-                    <i data-lucide="printer" width="16"></i> Imprimer / PDF
+                <button onclick="clearAllData()" class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors" title="Tout effacer">
+                    <i data-lucide="trash-2" width="16"></i> <span class="hidden md:inline">Tout</span>
+                </button>
+                <button onclick="window.print()" class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white bg-amber-500 hover:bg-amber-600 rounded-lg shadow-sm transition-colors">
+                    <i data-lucide="printer" width="16"></i> Imprimer
                 </button>
             </div>
         </div>
@@ -110,7 +118,7 @@
 
         <!-- Légende -->
         <div class="mb-4 p-4 bg-amber-50 rounded-lg border border-amber-200 print:bg-white print:border-gray-300">
-            <div class="flex flex-wrap gap-4 md:gap-6 text-sm">
+            <div class="flex flex-wrap gap-4 md:gap-6 text-sm mb-2">
                 <div class="flex items-center gap-2">
                     <i data-lucide="smile" class="w-4 h-4 text-amber-600"></i>
                     <span><strong>Humeur</strong> : 0-10</span>
@@ -127,6 +135,10 @@
                     <i data-lucide="file-text" class="w-4 h-4 text-gray-600"></i>
                     <span><strong>Notes</strong> : événements</span>
                 </div>
+            </div>
+            <div class="text-xs text-amber-700 flex items-center gap-1 no-print">
+                <i data-lucide="hard-drive" class="w-3 h-3"></i>
+                Vos données sont sauvegardées automatiquement sur cet appareil.
             </div>
         </div>
 
@@ -237,12 +249,88 @@
 
     <!-- Logique JavaScript -->
     <script>
+        // Clé de stockage local
+        const STORAGE_KEY = 'calendrier-humeur-data';
+
         // État global
         let currentDate = new Date();
-        let data = {}; // { "2025-01": { "1": { mood: 7, sleepHours: 7, sleepQuality: 6, notes: "..." }, ... } }
+        let data = {}; // { "2025-01": { "1": { mood: 7, sleepHours: 7, sleepQuality: 6, notes: "...", prn: "..." }, ... } }
+        let metadata = {}; // { patientName: "", nextAppointment: "", monthlyNotes: {}, prnSummary: {} }
 
         const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
                            'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+
+        // === FONCTIONS DE SAUVEGARDE ===
+        function saveData() {
+            const saveObject = {
+                data: data,
+                metadata: metadata,
+                lastSaved: new Date().toISOString()
+            };
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(saveObject));
+                showSaveIndicator();
+            } catch (e) {
+                console.error('Erreur de sauvegarde:', e);
+            }
+        }
+
+        function loadData() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    data = parsed.data || {};
+                    metadata = parsed.metadata || {};
+
+                    // Restaurer les champs
+                    if (metadata.patientName) {
+                        document.getElementById('patient-name').value = metadata.patientName;
+                    }
+                    if (metadata.nextAppointment) {
+                        document.getElementById('next-appointment').value = metadata.nextAppointment;
+                    }
+                }
+            } catch (e) {
+                console.error('Erreur de chargement:', e);
+                data = {};
+                metadata = {};
+            }
+        }
+
+        function showSaveIndicator() {
+            const indicator = document.getElementById('save-indicator');
+            if (indicator) {
+                indicator.classList.remove('opacity-0');
+                indicator.classList.add('opacity-100');
+                setTimeout(() => {
+                    indicator.classList.remove('opacity-100');
+                    indicator.classList.add('opacity-0');
+                }, 1500);
+            }
+        }
+
+        function saveMetadata(field, value) {
+            metadata[field] = value;
+            saveData();
+        }
+
+        function saveMonthlyField(field, value) {
+            const monthKey = getMonthKey(currentDate);
+            if (!metadata[field]) metadata[field] = {};
+            metadata[field][monthKey] = value;
+            saveData();
+        }
+
+        function loadMonthlyFields() {
+            const monthKey = getMonthKey(currentDate);
+
+            const monthlyNotes = metadata.monthlyNotes?.[monthKey] || '';
+            const prnSummary = metadata.prnSummary?.[monthKey] || '';
+
+            document.getElementById('monthly-notes').value = monthlyNotes;
+            document.getElementById('prn-summary').value = prnSummary;
+        }
 
         function getMonthKey(date) {
             return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
@@ -375,6 +463,9 @@
             // Mettre à jour les statistiques
             updateStats();
 
+            // Charger les notes du mois
+            loadMonthlyFields();
+
             // Réinitialiser les icônes Lucide
             lucide.createIcons();
         }
@@ -403,6 +494,7 @@
             }
 
             updateStats();
+            saveData();
         }
 
         function updateStats() {
@@ -505,6 +597,22 @@
             if (confirm("Effacer toutes les données de ce mois ?")) {
                 const monthKey = getMonthKey(currentDate);
                 data[monthKey] = {};
+                if (metadata.monthlyNotes) metadata.monthlyNotes[monthKey] = '';
+                if (metadata.prnSummary) metadata.prnSummary[monthKey] = '';
+                document.getElementById('monthly-notes').value = '';
+                document.getElementById('prn-summary').value = '';
+                saveData();
+                renderCalendar();
+            }
+        }
+
+        function clearAllData() {
+            if (confirm("Effacer TOUTES les données (tous les mois) ? Cette action est irréversible.")) {
+                localStorage.removeItem(STORAGE_KEY);
+                data = {};
+                metadata = {};
+                document.getElementById('patient-name').value = '';
+                document.getElementById('next-appointment').value = '';
                 document.getElementById('monthly-notes').value = '';
                 document.getElementById('prn-summary').value = '';
                 renderCalendar();
@@ -516,8 +624,25 @@
             // Définir la date actuelle
             currentDate = new Date();
 
+            // Charger les données sauvegardées
+            loadData();
+
             // Initialiser le sélecteur de mois
             document.getElementById('month-selector').addEventListener('change', onMonthSelect);
+
+            // Écouteurs pour les champs de métadonnées
+            document.getElementById('patient-name').addEventListener('change', function() {
+                saveMetadata('patientName', this.value);
+            });
+            document.getElementById('next-appointment').addEventListener('change', function() {
+                saveMetadata('nextAppointment', this.value);
+            });
+            document.getElementById('monthly-notes').addEventListener('change', function() {
+                saveMonthlyField('monthlyNotes', this.value);
+            });
+            document.getElementById('prn-summary').addEventListener('change', function() {
+                saveMonthlyField('prnSummary', this.value);
+            });
 
             // Date d'impression
             document.getElementById('print-date').textContent = "Généré le " + new Date().toLocaleDateString('fr-FR');
