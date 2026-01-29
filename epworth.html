@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Échelle de Somnolence d'Epworth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; -webkit-print-color-adjust: exact; }
+            .shadow-xl { box-shadow: none !important; }
+            input, textarea { border: none !important; }
+        }
+        .option-btn { transition: all 0.2s; }
+        .option-btn.selected { transform: scale(1.02); font-weight: bold; ring-width: 2px; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans min-h-screen text-slate-800">
+
+    <!-- En-tête -->
+    <div class="no-print sticky top-0 z-50 bg-white border-b shadow-sm p-4 mb-6">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <a href="index.html" class="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                    <i data-lucide="arrow-left" class="text-slate-600"></i>
+                </a>
+                <div class="bg-purple-600 p-2 rounded-lg text-white">
+                    <i data-lucide="moon" width="20" height="20"></i>
+                </div>
+                <h1 class="text-xl font-bold text-slate-800">Échelle d'Epworth</h1>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="resetForm()" class="flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg">
+                    <i data-lucide="rotate-ccw" width="16"></i> Reset
+                </button>
+                <button onclick="window.print()" class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white bg-purple-600 hover:bg-purple-700 rounded-lg">
+                    <i data-lucide="printer" width="16"></i> PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenu -->
+    <div class="max-w-4xl mx-auto p-6 bg-white shadow-xl mb-12 print:shadow-none print:p-0">
+
+        <div class="border-b-4 border-slate-800 pb-6 mb-8">
+            <h1 class="text-3xl font-bold text-slate-900 mb-2">Échelle de Somnolence d'Epworth</h1>
+            <p class="text-slate-500 uppercase text-xs font-bold tracking-wider">Epworth Sleepiness Scale (ESS)</p>
+
+            <div class="mt-6 grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded border border-slate-200 print:bg-white print:border-0">
+                <input type="text" placeholder="Nom du Patient" class="bg-transparent border-b border-slate-300 p-2 w-full outline-none font-bold text-lg">
+                <input type="date" class="bg-transparent border-b border-slate-300 p-2 w-full outline-none">
+            </div>
+
+            <div class="mt-6 bg-purple-50 border border-purple-200 rounded-lg p-4 print:bg-white print:border-slate-300">
+                <p class="text-sm text-slate-700">
+                    <strong>Consigne :</strong> Quelle est la probabilité que vous vous assoupissiez ou vous endormiez dans les situations suivantes (et non pas simplement vous sentir fatigué) ? Répondez même si vous ne vous êtes pas retrouvé récemment dans ces situations.
+                </p>
+                <p class="text-xs text-slate-500 mt-2">
+                    Utilisez l'échelle suivante pour choisir le chiffre le plus approprié pour chaque situation.
+                </p>
+            </div>
+        </div>
+
+        <div id="questions-container" class="space-y-6">
+            <!-- Questions générées par JS -->
+        </div>
+
+        <!-- Résultats -->
+        <div class="mt-12 pt-6 border-t-2 border-slate-200 break-inside-avoid">
+            <h3 class="text-xl font-bold text-slate-900 mb-4">Résultats</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-100 rounded-xl p-6 flex flex-col items-center justify-center border border-slate-200 print:bg-white print:border-2 print:border-slate-800">
+                    <span class="text-slate-500 font-bold uppercase text-xs mb-2">Score Total</span>
+                    <span id="total-score" class="text-5xl font-bold text-purple-600 print:text-black">0</span>
+                    <span class="text-slate-400 text-xs mt-2">/24</span>
+                </div>
+
+                <div class="space-y-3 text-sm">
+                    <div id="interpretation" class="p-4 rounded-lg border-2">
+                        <p class="font-bold mb-1">Interprétation</p>
+                        <p id="interpretation-text" class="text-sm">Complétez le questionnaire</p>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded text-xs text-slate-600 print:bg-white print:border print:border-slate-300">
+                        <p class="font-bold mb-1">Seuils :</p>
+                        <p>• 0-10 : Somnolence normale</p>
+                        <p>• 11-15 : Somnolence modérée</p>
+                        <p>• 16-24 : Somnolence sévère</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <label class="block text-sm font-bold text-slate-700 mb-2">Commentaires cliniques</label>
+                <textarea class="w-full p-3 border border-slate-300 rounded h-32" placeholder="Notes sur le contexte, la qualité du sommeil, présence de ronflements, pauses respiratoires, etc."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 8 situations de l'échelle d'Epworth
+        const questions = [
+            { id: 1, text: "Assis(e) en train de lire" },
+            { id: 2, text: "En train de regarder la télévision" },
+            { id: 3, text: "Assis(e) inactif/ve dans un lieu public (cinéma, théâtre, réunion)" },
+            { id: 4, text: "Comme passager/ère d'une voiture (ou transport en commun) roulant depuis une heure sans arrêt" },
+            { id: 5, text: "Allongé(e) l'après-midi pour vous reposer quand les circonstances le permettent" },
+            { id: 6, text: "Assis(e) en train de parler avec quelqu'un" },
+            { id: 7, text: "Assis(e) tranquillement après un repas sans alcool" },
+            { id: 8, text: "Dans une voiture immobilisée depuis quelques minutes dans un embouteillage" }
+        ];
+
+        // Options de réponse : [Label, Score]
+        const options = [
+            { label: "0 = Aucune chance de s'endormir", score: 0, color: "bg-green-100 border-green-300 text-green-900" },
+            { label: "1 = Faible chance de s'endormir", score: 1, color: "bg-yellow-50 border-yellow-200 text-yellow-900" },
+            { label: "2 = Chance moyenne de s'endormir", score: 2, color: "bg-orange-50 border-orange-200 text-orange-900" },
+            { label: "3 = Forte chance de s'endormir", score: 3, color: "bg-red-100 border-red-300 text-red-900" }
+        ];
+
+        let scores = {};
+
+        function render() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = questions.map(q => `
+                <div class="break-inside-avoid border-b border-slate-100 pb-6 last:border-0">
+                    <div class="flex gap-4 items-start mb-3">
+                        <span class="font-bold text-slate-400 w-6">${q.id}.</span>
+                        <p class="font-medium text-slate-800 text-lg">${q.text}</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-2 ml-10">
+                        ${options.map((opt, idx) => `
+                            <button onclick="setScore(${q.id}, ${opt.score})"
+                                class="option-btn p-3 rounded text-sm text-left border ${scores[q.id] === opt.score ? opt.color + ' ring-2 ring-offset-1 ring-purple-300 selected' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}">
+                                ${opt.label}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setScore(id, val) {
+            scores[id] = val;
+            render();
+            calculate();
+        }
+
+        function calculate() {
+            let total = 0;
+
+            questions.forEach(q => {
+                const val = scores[q.id] || 0;
+                total += val;
+            });
+
+            document.getElementById('total-score').innerText = total;
+
+            // Interprétation
+            const interpDiv = document.getElementById('interpretation');
+            const interpText = document.getElementById('interpretation-text');
+
+            if (total === 0 && Object.keys(scores).length === 0) {
+                interpDiv.className = 'p-4 rounded-lg border-2 border-slate-200 bg-slate-50';
+                interpText.innerText = 'Complétez le questionnaire';
+            } else if (total <= 10) {
+                interpDiv.className = 'p-4 rounded-lg border-2 border-green-300 bg-green-50 print:bg-white print:border-green-500';
+                interpText.innerText = 'Somnolence normale (0-10). Pas de somnolence diurne pathologique.';
+            } else if (total <= 15) {
+                interpDiv.className = 'p-4 rounded-lg border-2 border-orange-300 bg-orange-50 print:bg-white print:border-orange-500';
+                interpText.innerText = 'Somnolence modérée (11-15). Investigation recommandée (apnée du sommeil, syndrome des jambes sans repos, narcolepsie, etc.).';
+            } else {
+                interpDiv.className = 'p-4 rounded-lg border-2 border-red-300 bg-red-50 print:bg-white print:border-red-500';
+                interpText.innerText = 'Somnolence sévère (16-24). Consultation spécialisée urgente. Contre-indication temporaire à la conduite automobile.';
+            }
+        }
+
+        window.onload = function() {
+            lucide.createIcons();
+            render();
+        };
+
+        function resetForm() {
+            if(confirm('Effacer toutes les réponses ?')) {
+                scores = {};
+                document.querySelectorAll('input, textarea').forEach(i => i.value = '');
+                render();
+                calculate();
+            }
+        }
+    </script>
+</body>
+</html>
